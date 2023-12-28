@@ -1,12 +1,10 @@
 use crate::{
+    Result,
     activity::Activity,
     pack_unpack::{pack, unpack},
 };
 use serde_json::{json, Value};
-use std::error::Error;
 use uuid::Uuid;
-
-type Result<T> = std::result::Result<T, Box<dyn Error>>;
 
 /// A client that connects to and communicates with the Discord IPC.
 ///
@@ -25,7 +23,7 @@ pub trait DiscordIpc {
     ///
     /// # Examples
     /// ```
-    /// let mut client = discord_rich_presence::new_client("<some client id>")?;
+    /// let mut client = discord_rich_presence::new_client("<some client id>");
     /// client.connect()?;
     /// ```
     fn connect(&mut self) -> Result<()> {
@@ -48,7 +46,7 @@ pub trait DiscordIpc {
     ///
     /// # Examples
     /// ```
-    /// let mut client = discord_rich_presence::new_client("<some client id>")?;
+    /// let mut client = discord_rich_presence::new_client("<some client id>");
     /// client.connect()?;
     ///
     /// client.close()?;
@@ -109,7 +107,7 @@ pub trait DiscordIpc {
     /// ```
     fn send(&mut self, data: Value, opcode: u8) -> Result<()> {
         let data_string = data.to_string();
-        let header = pack(opcode.into(), data_string.len() as u32)?;
+        let header = pack(opcode.into(), data_string.len() as u32);
 
         self.write(&header)?;
         self.write(data_string.as_bytes())?;

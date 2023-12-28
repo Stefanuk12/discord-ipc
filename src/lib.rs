@@ -10,7 +10,7 @@
 //! use discord_rich_presence::{activity, DiscordIpc, DiscordIpcClient};
 //!
 //! fn main() -> Result<(), Box<dyn std::error::Error>> {
-//!     let mut client = DiscordIpcClient::new("<some client id>")?;
+//!     let mut client = DiscordIpcClient::new("<some client id>");
 //!     client.connect()?;
 //!
 //!     let payload = activity::Activity::new().state("Hello world!");
@@ -42,8 +42,38 @@ pub use ipc::DiscordIpcClient;
 ///
 /// # Examples
 /// ```
-/// let ipc_client = discord_ipc_client::new_client("<some client id>")?;
+/// let ipc_client = discord_ipc_client::new_client("<some client id>");
 /// ```
-pub fn new_client(client_id: &str) -> Result<impl DiscordIpc, Box<dyn std::error::Error>> {
+pub fn new_client(client_id: &str) -> impl DiscordIpc {
     ipc::DiscordIpcClient::new(client_id)
 }
+
+/// The error type for this crate.
+#[derive(Debug, thiserror::Error)]
+pub enum Error {
+    /// Any IO errors.
+    #[error(transparent)]
+    IO(#[from] std::io::Error),
+    /// Any String FromUtf8 errors.
+    #[error(transparent)]
+    String(#[from] std::string::FromUtf8Error),
+    /// Errors from the serde_json crate.
+    #[error(transparent)]
+    Json(#[from] serde_json::Error),
+    /// The opcode was malformed while attempting to unpack.
+    #[error("malformed opcode")]
+    MalformedOpcode,
+    /// The header was malformed while attempting to unpack.
+    #[error("malformed header")]
+    MalformedHeader,
+    /// Could not connect to the Discord IPC socket.
+    #[error("could not connect to the Discord IPC socket: {0}")]
+    CouldNotConnect(std::io::Error),
+    /// Could not resolve the pipe pattern (exclusive to unix)
+    #[cfg(unix)]
+    #[error("could not resolve the pipe pattern")]
+    CouldNotResolvePipePattern,
+}
+
+/// The result type for this crate.
+pub type Result<T> = std::result::Result<T, Error>;

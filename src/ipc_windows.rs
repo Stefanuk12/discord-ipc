@@ -1,14 +1,11 @@
-use crate::discord_ipc::DiscordIpc;
+use crate::{Result, discord_ipc::DiscordIpc};
 use serde_json::json;
 use std::{
-    error::Error,
     fs::{File, OpenOptions},
     io::{Read, Write},
     os::windows::fs::OpenOptionsExt,
     path::PathBuf,
 };
-
-type Result<T> = std::result::Result<T, Box<dyn Error>>;
 
 #[allow(dead_code)]
 /// A wrapper struct for the functionality contained in the
@@ -25,22 +22,22 @@ impl DiscordIpcClient {
     ///
     /// # Examples
     /// ```
-    /// let ipc_client = DiscordIpcClient::new("<some client id>")?;
+    /// let ipc_client = DiscordIpcClient::new("<some client id>");
     /// ```
-    pub fn new(client_id: &str) -> Result<Self> {
-        let client = Self {
+    pub fn new(client_id: &str) -> Self {
+        Self {
             client_id: client_id.to_string(),
             connected: false,
             socket: None,
-        };
-
-        Ok(client)
+        }
     }
 }
 
 impl DiscordIpc for DiscordIpcClient {
     fn connect_ipc(&mut self) -> Result<()> {
-        for i in 0..10 {
+        let iter = 0..10;
+        let last = iter.end - 1;
+        for i in iter {
             let path = PathBuf::from(format!(r"\\?\pipe\discord-ipc-{}", i));
 
             match OpenOptions::new().access_mode(0x3).open(&path) {
@@ -48,11 +45,12 @@ impl DiscordIpc for DiscordIpcClient {
                     self.socket = Some(handle);
                     return Ok(());
                 }
-                Err(_) => continue,
+                Err(e) => if i == last { Err(e)? } else { continue }
             }
         }
 
-        Err("Couldn't connect to the Discord IPC socket".into())
+        // this should never happen
+        Ok(())
     }
 
     fn write(&mut self, data: &[u8]) -> Result<()> {
