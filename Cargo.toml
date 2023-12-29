@@ -1,5 +1,5 @@
 [package]
-name = "discord-ipc"
+name = "discord_ipc"
 version = "0.1.0"
 authors = ["sardonicism-04 <110789901+sardonicism-04@users.noreply.github.com>", "Stefanuk12"]
 edition = "2021"
