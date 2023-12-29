@@ -1,4 +1,4 @@
-use discord_rich_presence::{Result, activity, DiscordIpc, DiscordIpcClient};
+use discord_ipc::{Result, activity, DiscordIpc, DiscordIpcClient};
 
 #[test]
 fn test_models() -> Result<()> {

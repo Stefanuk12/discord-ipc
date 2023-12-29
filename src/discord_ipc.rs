@@ -381,7 +381,7 @@ pub trait DiscordIpc {
     ///
     /// # Examples
     /// ```
-    /// let mut client = discord_rich_presence::new_client("<some client id>");
+    /// let mut client = discord_ipc::new_client("<some client id>");
     /// client.connect()?;
     /// ```
     fn connect(&mut self) -> Result<()> {
@@ -406,7 +406,7 @@ pub trait DiscordIpc {
     ///
     /// # Examples
     /// ```
-    /// let mut client = discord_rich_presence::new_client("<some client id>");
+    /// let mut client = discord_ipc::new_client("<some client id>");
     /// client.connect()?;
     ///
     /// client.close()?;

@@ -7,7 +7,7 @@
 //!
 //! # Hello world
 //! ```
-//! use discord_rich_presence::{activity, DiscordIpc, DiscordIpcClient};
+//! use discord_ipc::{activity, DiscordIpc, DiscordIpcClient};
 //!
 //! fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!     let mut client = DiscordIpcClient::new("<some client id>");
