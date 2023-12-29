@@ -35,6 +35,7 @@ mod ipc_windows;
 use ipc_windows as ipc;
 
 pub use ipc::DiscordIpcClient;
+use serde::ser::SerializeStruct;
 
 #[deprecated(since = "0.2.0", note = "use DiscordIpcClient::new() instead")]
 /// Creates a new client to connect to the Discord IPC. Functionally
@@ -79,5 +80,9 @@ pub enum Error {
 pub type Result<T> = std::result::Result<T, Error>;
 
 /// An empty struct that represents the absence of a payload.
-#[derive(serde::Serialize)]
 pub(crate) struct Empty;
+impl serde::Serialize for Empty {
+    fn serialize<S: serde::Serializer>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error> {
+        serializer.serialize_struct("Empty", 0).unwrap().end()
+    }
+}
