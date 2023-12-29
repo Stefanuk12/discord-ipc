@@ -1,4 +1,4 @@
-use discord_ipc::{Result, activity, DiscordIpc, DiscordIpcClient};
+use discord_ipc_rp::{Result, activity, DiscordIpc, DiscordIpcClient};
 
 fn main() -> Result<()> {
     env_logger::Builder::new().filter_level(log::LevelFilter::Debug).init();

@@ -1,4 +1,4 @@
-use discord_ipc::{Result, activity, DiscordIpc, DiscordIpcClient};
+use discord_ipc_rp::{Result, activity, DiscordIpc, DiscordIpcClient};
 
 #[test]
 fn test_updating() -> Result<()> {
