@@ -1,5 +1,4 @@
-use crate::{Result, discord_ipc::DiscordIpc};
-use serde_json::json;
+use crate::{Result, discord_ipc::DiscordIpc, Empty};
 use std::{
     fs::{File, OpenOptions},
     io::{Read, Write},
@@ -70,8 +69,7 @@ impl DiscordIpc for DiscordIpcClient {
     }
 
     fn close(&mut self) -> Result<()> {
-        let data = json!({});
-        if self.send(data, 2).is_ok() {}
+        if self.send(&Empty, 2).is_ok() {}
 
         let socket = self.socket.as_mut().unwrap();
         socket.flush()?;
