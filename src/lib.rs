@@ -79,5 +79,5 @@ pub enum Error {
 pub type Result<T> = std::result::Result<T, Error>;
 
 /// An empty struct that represents the absence of a payload.
-#[derive(serde_derive::Serialize)]
+#[derive(serde::Serialize)]
 pub(crate) struct Empty;

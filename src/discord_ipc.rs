@@ -3,8 +3,7 @@ use crate::{
     activity::Activity,
     pack_unpack::{pack, unpack},
 };
-use serde::{Deserializer, de::IntoDeserializer, Deserialize};
-use serde_derive::{Serialize, Deserialize};
+use serde::{Deserializer, de::IntoDeserializer, Serialize, Deserialize};
 use serde_json::Value;
 use strum::FromRepr;
 use uuid::Uuid;
