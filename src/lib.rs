@@ -70,10 +70,6 @@ pub enum Error {
     /// Could not connect to the Discord IPC socket.
     #[error("could not connect to the Discord IPC socket: {0}")]
     CouldNotConnect(std::io::Error),
-    /// Could not resolve the pipe pattern (exclusive to unix)
-    #[cfg(unix)]
-    #[error("could not resolve the pipe pattern")]
-    CouldNotResolvePipePattern,
 }
 
 /// The result type for this crate.

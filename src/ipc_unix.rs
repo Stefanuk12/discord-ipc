@@ -37,11 +37,11 @@ impl DiscordIpcClient {
         }
     }
 
-    fn get_pipe_pattern() -> Result<PathBuf> {
+    fn get_pipe_pattern() -> PathBuf {
         ENV_KEYS
             .iter()
             .find_map(|key| var(key).ok().map(|val| PathBuf::from(val)))
-            .ok_or(Error::CouldNotResolvePipePattern)
+            .unwrap_or("/tmp/".into())
     }
 }
 
@@ -49,7 +49,7 @@ impl DiscordIpc for DiscordIpcClient {
     fn connect_ipc(&mut self) -> Result<()> {
         let iter = 0..10;
         let last = iter.end - 1;
-        let base_path = DiscordIpcClient::get_pipe_pattern()?;
+        let base_path = DiscordIpcClient::get_pipe_pattern();
         for i in iter {
             let path = base_path.join(format!("discord-ipc-{}", i));
 
