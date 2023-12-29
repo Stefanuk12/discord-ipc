@@ -10,13 +10,16 @@ A simple, cross-platform crate to connect and send data to Discord's IPC. Specia
 use discord_rich_presence::{Result, activity, DiscordIpc, DiscordIpcClient};
 
 fn main() -> Result<()> {
-    let mut client = DiscordIpcClient::new("<some application ID>")?;
+    let mut client = DiscordIpcClient::new("<some application ID>");
 
     client.connect()?;
     client.set_activity(activity::Activity::new()
         .state("foo")
         .details("bar")
     )?;
+
+    std::thread::sleep(std::time::Duration::from_secs(5));
+
     client.close()?;
 
     Ok(())
