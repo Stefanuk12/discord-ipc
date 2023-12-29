@@ -90,6 +90,8 @@ impl DiscordIpc for DiscordIpcClient {
         socket.flush()?;
         socket.shutdown(Shutdown::Both)?;
 
+        log::debug!("Closed IPC socket");
+
         Ok(())
     }
 

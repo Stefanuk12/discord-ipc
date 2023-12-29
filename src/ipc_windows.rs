@@ -74,6 +74,8 @@ impl DiscordIpc for DiscordIpcClient {
         let socket = self.socket.as_mut().unwrap();
         socket.flush()?;
 
+        log::debug!("Closed IPC socket");
+
         Ok(())
     }
 
