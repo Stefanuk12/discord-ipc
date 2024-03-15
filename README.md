@@ -1,7 +1,6 @@
 # Discord Rich Presence
-[![crates.io](https://img.shields.io/crates/v/discord-rich-presence.svg)](https://crates.io/crates/discord-ipc-rp)
-[![Docs](https://docs.rs/discord-rich-presence/badge.svg?version=0.2.3)](https://docs.rs/discord-ipc-rp)
-
+[![crates.io](https://img.shields.io/crates/v/discord-ipc-rp.svg)](https://crates.io/crates/discord-ipc-rp)
+[![Docs](https://docs.rs/discord-ipc-rp/badge.svg)](https://docs.rs/discord-ipc-rp/)
 
 A simple, cross-platform crate to connect and send data to Discord's IPC. Special attention is given to sending rich presence data.
 
